@@ -1,0 +1,167 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+@import "tailwindcss";
+
+
+@layer base {
+  :root {
+    --radius-lg: 1rem;
+    --radius-md: 0.75rem;
+    --radius-sm: 0.5rem;
+  }
+  
+  body {
+    font-family: "Ubuntu", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    background-color: var(--color-bg-page);
+    color: var(--color-text-page);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  h1 {
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+  }
+
+  h2 {
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-size: clamp(1.8rem, 4vw, 2.75rem);
+  }
+
+  h3 {
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  }
+
+  input,
+  select {
+    color: var(--color-text-page);
+  }
+}
+
+/* Light Theme (DEFAULT) */
+@theme {
+  --color-bg-page: oklch(98% 0 none);
+  --color-text-page: oklch(22% 0 none);
+
+  --color-bg-nav: oklch(100% 0 none);
+  --color-text-nav: oklch(22% 0 none);
+  --color-border-nav: oklch(90% 0 none);
+
+  --color-bg-card: oklch(100% 0 none);
+  --color-bg-form: oklch(96% 0.01 260);
+  --color-border-card: oklch(90% 0 none);
+  --color-hover-item: oklch(92% 0 none);
+
+  /* blue primary color */
+  --color-primary: oklch(55% 0.14 255);
+  --color-primary-soft: oklch(95% 0.03 255);
+
+  /* input fields */
+  --color-border-input: oklch(88% 0 none);
+  --color-border-input-hover: oklch(82% 0 none);
+  --color-border-input-focus: var(--color-primary);
+
+  /* chart */
+  --chart-line: oklch(55% 0.14 255); /* to avoid white lines */
+}
+
+/* Dark Theme (overwrites light theme's rules) */
+.dark {
+  --color-bg-page: oklch(10% 0 none);
+  --color-text-page: oklch(96% 0 none);
+
+  --color-bg-nav: oklch(12% 0 none);
+  --color-text-nav: oklch(96% 0 none);
+  --color-border-nav: oklch(30% 0 none);
+
+  --color-bg-card: oklch(16% 0 none);
+  --color-bg-form: oklch(18% 0 none);
+  --color-border-card: oklch(30% 0 none);
+  --color-hover-item: oklch(22% 0 none);
+
+  /* blue primary color */
+  --color-primary: oklch(70% 0.14 255);
+  --color-primary-soft: oklch(25% 0.08 255);
+
+  /* input fields */
+  --color-border-input: oklch(32% 0 none);
+  --color-border-input-hover: oklch(40% 0 none);
+  --color-border-input-focus: var(--color-primary);
+
+  /* chart */
+  --chart-line: oklch(75% 0.14 255);
+}
+
+/* Backgrounds */
+.gradient-bg {
+  background: linear-gradient(
+    180deg,
+    var(--color-primary-soft),
+    var(--color-bg-page)
+  );
+  transition: background 0.4s ease;
+}
+
+.dark .gradient-bg {
+  background: linear-gradient(
+    180deg,
+    oklch(20% 0.08 255),
+    var(--color-bg-page)
+  );
+}
+
+.secondary-bg {
+  background-color: var(--color-surface-100);
+}
+
+.dark .secondary-bg {
+  background-color: var(--color-surface-900);
+}
+
+/* Utilities */
+@layer utilities {
+  .card {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border-card);
+    border-radius: var(--radius-lg);
+  }
+
+  .no-spinner {
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    -moz-appearance: textfield;
+  }
+
+}
+
+/* Components: handle nav hover */
+@layer components {
+  .nav-item {
+    @apply relative cursor-pointer font-medium opacity-80 transition-colors duration-200;
+  }
+
+  .nav-item::after {
+    content: '';
+    @apply absolute left-0 -bottom-1 h-0.5 w-full scale-x-0 origin-left
+           bg-current transition-transform duration-300 ease-out;
+  }
+
+  .nav-item:hover {
+    @apply opacity-100;
+  }
+
+  .nav-item:hover::after {
+    @apply scale-x-100;
+  }
+}
+
